@@ -1,11 +1,8 @@
-from flask import Flask, request, jsonify
-import base64
-import numpy as np
-
-app = Flask(__name__)
-
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["GET", "POST"])
 def process_audio():
+    if request.method == "GET":
+        return "API is running", 200
+
     data = request.get_json()
 
     audio_base64 = data["audio_base64"]
@@ -30,6 +27,3 @@ def process_audio():
     }
 
     return jsonify(result)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
